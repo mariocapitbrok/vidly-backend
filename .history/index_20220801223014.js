@@ -61,10 +61,8 @@ app.delete('/api/genres/:id', (req, res) => {
 
   if (!genre) return res.status(404).send('Genre was not found')
 
-  /* const index = genres.indexOf(genre)
-  genres.splice(index, 1) */
-
-  genres = genres.filter(g => String(g.id) !== req.params.id)
+  const index = genres.indexOf(genre)
+  genres.splice(index, 1)
 
   res.send(genre)
 })

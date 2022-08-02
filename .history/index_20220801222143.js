@@ -22,13 +22,13 @@ app.get('/api/genres', (req, res) => {
 app.get('/api/genres/:id', (req, res) => {
   const genre = genres.find(g => String(g.id) === req.params.id)
 
-  if (!genre) return res.status(404).send('Genre with given ID was not found')
+  if (!genre) return res.status(404).send('Genre was not found')
 
   res.send(genre)
 })
 
 app.post('/api/genres', (req, res) => {
-  const { error } = validateGenre(req.body)
+  const error = validateGenre(req.body)
 
   if (error) return res.status(400).send(error.details[0].message)
 
@@ -43,28 +43,15 @@ app.post('/api/genres', (req, res) => {
 })
 
 app.put('/api/genres/:id', (req, res) => {
-  const genre = genres.find(g => String(g.id) === req.params.id)
+  let genre = genres.find(g => String(g.id) === req.params.id)
 
   if (!genre) return res.status(404).send('Genre was not found')
 
-  const { error } = validateGenre(req.body)
+  const error = validateGenre(req.body)
 
   if (error) return res.status(400).send(error.details[0].message)
 
   genre.name = req.body.name
-
-  res.send(genre)
-})
-
-app.delete('/api/genres/:id', (req, res) => {
-  const genre = genres.find(g => String(g.id) === req.params.id)
-
-  if (!genre) return res.status(404).send('Genre was not found')
-
-  /* const index = genres.indexOf(genre)
-  genres.splice(index, 1) */
-
-  genres = genres.filter(g => String(g.id) !== req.params.id)
 
   res.send(genre)
 })
@@ -74,9 +61,9 @@ const validateGenre = genre => {
     name: Joi.string().required(),
   })
 
-  const result = schema.validate(genre)
+  const { error } = schema.validate(genre)
 
-  return result
+  return error
 }
 
 const PORT = process.env.PORT || 3050

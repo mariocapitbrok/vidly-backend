@@ -56,19 +56,6 @@ app.put('/api/genres/:id', (req, res) => {
   res.send(genre)
 })
 
-app.delete('/api/genres/:id', (req, res) => {
-  const genre = genres.find(g => String(g.id) === req.params.id)
-
-  if (!genre) return res.status(404).send('Genre was not found')
-
-  /* const index = genres.indexOf(genre)
-  genres.splice(index, 1) */
-
-  genres = genres.filter(g => String(g.id) !== req.params.id)
-
-  res.send(genre)
-})
-
 const validateGenre = genre => {
   const schema = Joi.object({
     name: Joi.string().required(),
