@@ -80,7 +80,7 @@ router.put('/:id', async (req, res) => {
   res.send(result)
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', (req, res) => {
   //const genre = genres.find(g => String(g.id) === req.params.id)
   const genre = await Genre.find({ _id: req.params.id })
 

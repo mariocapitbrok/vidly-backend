@@ -30,34 +30,32 @@ router.get('/', async (req, res) => {
   res.send(genres)
 })
 
-router.get('/:id', async (req, res) => {
-  //const genre = genres.find(g => String(g.id) === req.params.id)
-  const genre = await Genre.find({ _id: req.params.id })
+router.get('/:id', (req, res) => {
+  const genre = genres.find(g => String(g.id) === req.params.id)
 
   if (!genre) return res.status(404).send('Genre with given ID was not found')
 
   res.send(genre)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   const { error } = validateGenre(req.body)
 
   if (error) return res.status(400).send(error.details[0].message)
 
-  const genre = new Genre({
+  const newGenre = {
     //id: genres.length + 1,
     name: req.body.name,
-  })
+  }
 
-  //genres = [...genres, genre]
-  const result = await genre.save()
+  //genres = [...genres, newGenre]
+  newGenre.save()
 
-  res.send(result)
+  res.send(newGenre)
 })
 
-router.put('/:id', async (req, res) => {
-  //const genre = genres.find(g => String(g.id) === req.params.id)
-  const genre = await Genre.find({ _id: req.params.id })
+router.put('/:id', (req, res) => {
+  const genre = genres.find(g => String(g.id) === req.params.id)
 
   if (!genre) return res.status(404).send('Genre was not found')
 
@@ -65,35 +63,22 @@ router.put('/:id', async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message)
 
-  //genre.name = req.body.name
+  genre.name = req.body.name
 
-  const result = await Genre.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: {
-        name: req.body.name,
-      },
-    },
-    { new: true }
-  )
-
-  res.send(result)
+  res.send(genre)
 })
 
-router.delete('/:id', async (req, res) => {
-  //const genre = genres.find(g => String(g.id) === req.params.id)
-  const genre = await Genre.find({ _id: req.params.id })
+router.delete('/:id', (req, res) => {
+  const genre = genres.find(g => String(g.id) === req.params.id)
 
   if (!genre) return res.status(404).send('Genre was not found')
 
   /* const index = genres.indexOf(genre)
   genres.splice(index, 1) */
 
-  //genres = genres.filter(g => String(g.id) !== req.params.id)
+  genres = genres.filter(g => String(g.id) !== req.params.id)
 
-  const result = await Genre.findOneAndDelete(req.params.id)
-
-  res.send(result)
+  res.send(genre)
 })
 
 const validateGenre = genre => {

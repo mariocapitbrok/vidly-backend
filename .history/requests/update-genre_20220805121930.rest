@@ -2,5 +2,5 @@ PUT http://localhost:3001/api/genres/62ed4e614a41cc3c41bf8592
 Content-Type: application/json
 
 {
-  "name": "Action"
+  "name": "Actions"
 }
