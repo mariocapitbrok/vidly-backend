@@ -20,6 +20,9 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
+  const { error } = validateGenre(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
+
   const genre = await Genre.findById(req.params.id)
 
   if (!genre) return res.status(404).send('Genre with given ID was not found')

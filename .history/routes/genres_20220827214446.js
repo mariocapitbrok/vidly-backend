@@ -4,6 +4,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 const genreSchema = mongoose.Schema({
+  _id: String,
   name: {
     type: String,
     required: true,

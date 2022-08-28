@@ -8,10 +8,10 @@ const url = process.env.MONGODB_LOCAL_URI
 
 mongoose
   .connect(url)
-  .then(() => {
+  .then(result => {
     console.log('Connected to MongoDB...')
   })
-  .catch(error => console.error('Could not connect to MongoDB...', error))
+  .catch(error => console.error('Failed connection to MongoDB...', error))
 
 app.use(express.json())
 app.use('/api/genres', genres)

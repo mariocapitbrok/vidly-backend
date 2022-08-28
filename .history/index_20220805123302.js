@@ -11,7 +11,7 @@ mongoose
   .then(() => {
     console.log('Connected to MongoDB...')
   })
-  .catch(error => console.error('Could not connect to MongoDB...', error))
+  .catch(error => console.error('Failed connection to MongoDB...', error))
 
 app.use(express.json())
 app.use('/api/genres', genres)

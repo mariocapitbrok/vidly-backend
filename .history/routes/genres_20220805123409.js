@@ -7,20 +7,25 @@ const genreSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 5,
-    maxlength: 50,
   },
 })
 
 const Genre = mongoose.model('Genre', genreSchema)
 
+/* let genres = [
+  { id: 1, name: 'Action' },
+  { id: 2, name: 'Comedy' },
+  { id: 3, name: 'Thriller' },
+] */
+
 router.get('/', async (req, res) => {
-  const genres = await Genre.find().sort('name')
+  const genres = await Genre.find()
   res.send(genres)
 })
 
 router.get('/:id', async (req, res) => {
-  const genre = await Genre.findById(req.params.id)
+  //const genre = genres.find(g => String(g.id) === req.params.id)
+  const genre = await Genre.find({ _id: req.params.id })
 
   if (!genre) return res.status(404).send('Genre with given ID was not found')
 
@@ -32,20 +37,30 @@ router.post('/', async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message)
 
-  let genre = new Genre({
+  const genre = new Genre({
+    //id: genres.length + 1,
     name: req.body.name,
   })
 
-  genre = await genre.save()
+  //genres = [...genres, genre]
+  const result = await genre.save()
 
-  res.send(genre)
+  res.send(result)
 })
 
 router.put('/:id', async (req, res) => {
+  //const genre = genres.find(g => String(g.id) === req.params.id)
+  const genre = await Genre.find({ _id: req.params.id })
+
+  if (!genre) return res.status(404).send('Genre was not found')
+
   const { error } = validateGenre(req.body)
+
   if (error) return res.status(400).send(error.details[0].message)
 
-  const genre = await Genre.findByIdAndUpdate(
+  //genre.name = req.body.name
+
+  const result = await Genre.findByIdAndUpdate(
     req.params.id,
     {
       $set: {
@@ -55,17 +70,23 @@ router.put('/:id', async (req, res) => {
     { new: true }
   )
 
-  if (!genre) return res.status(404).send('Genre was not found')
-
-  res.send(genre)
+  res.send(result)
 })
 
 router.delete('/:id', async (req, res) => {
-  const genre = await Genre.findByIdAndRemove(req.params.id)
+  //const genre = genres.find(g => String(g.id) === req.params.id)
+  const genre = await Genre.find({ _id: req.params.id })
 
   if (!genre) return res.status(404).send('Genre was not found')
 
-  res.send(genre)
+  /* const index = genres.indexOf(genre)
+  genres.splice(index, 1) */
+
+  //genres = genres.filter(g => String(g.id) !== req.params.id)
+
+  const result = await Genre.findOneAndDelete(req.params.id)
+
+  res.send(result)
 })
 
 const validateGenre = genre => {

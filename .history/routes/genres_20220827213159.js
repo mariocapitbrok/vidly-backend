@@ -12,7 +12,7 @@ const genreSchema = mongoose.Schema({
   },
 })
 
-const Genre = mongoose.model('Genre', genreSchema)
+const Genre = new mongoose.model('Genre', genreSchema)
 
 router.get('/', async (req, res) => {
   const genres = await Genre.find().sort('name')

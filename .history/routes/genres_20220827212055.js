@@ -46,7 +46,7 @@ router.put('/:id', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   const genre = await Genre.findByIdAndUpdate(
-    req.params.id,
+    String(req.params.id),
     {
       $set: {
         name: req.body.name,
