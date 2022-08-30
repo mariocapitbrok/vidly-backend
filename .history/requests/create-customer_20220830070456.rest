@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/customers
+Content-Type: application/json
+
+{
+  "name": "Demo Customer Name",
+  "phone": "111 1111 1111",
+  "isGold": true
+}

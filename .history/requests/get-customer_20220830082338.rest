@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/customers/630e0e51ad4780c2b633674a

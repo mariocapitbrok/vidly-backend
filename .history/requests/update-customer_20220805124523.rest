@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/genres/62ed50a625c61e3bee429931
+Content-Type: application/json
+
+{
+  "name": "Action"
+}
