@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/movies
+Content-Type: application/json
+
+{
+  "title":"Star Wars IV. Return of the Jedi",
+    "genreId": "632fa87fea0b9264e40a3322",
+
+  "numberInStock": 12,
+  "dailyRentalRate": 7
+}
